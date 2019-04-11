@@ -33,9 +33,9 @@ while(1):
     # marks them in the output map edges
     edges = cv2.Canny(frame,100,200)
 
-    '''for edge in edges:
-        if edge == 0:'''
-
+    for edge in edges:
+        if edge == [0,0,0]:
+            
 
     # Display edges in a frame
     cv2.imshow('Edges',edges)
