@@ -43,7 +43,7 @@ while True:
 
 	# resize the frame, convert it to grayscale, and blur it
 	frame = imutils.resize(frame, width=500)
-	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 	gray = cv2.GaussianBlur(gray, (21, 21), 0)
 
 	# if the first frame is None, initialize it
@@ -54,7 +54,7 @@ while True:
 	# compute the absolute difference between the current frame and
 	# first frame
 	frameDelta = cv2.absdiff(firstFrame, gray)
-	thresh = cv2.threshold(frameDelta, 25,(152,222,201), cv2.THRESH_BINARY,3)[1]
+	thresh = cv2.threshold(frameDelta, 25,255, cv2.THRESH_BINARY,3)[1]
 
 	# dilate the thresholded image to fill in holes, then find contours
 	# on thresholded image
