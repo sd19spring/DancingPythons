@@ -1,6 +1,8 @@
-'''import numpy as np
+import numpy as np
 import cv2
 from PIL import Image, ImageFont, ImageDraw
+from matplotlib import pyplot as py
+import os
 
 
 # capture frames using cap
@@ -16,6 +18,17 @@ while(1):
     edges = cv2.Canny(frame,100,200)
 
 
+
+    cv2.imwrite("edges.jpg", edges)
+    edges = cv2.imread("edges.jpg")
+
+    edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGBA)
+    edges[np.all(edges == [0,0,255], axis=2)] = [0, 0, 0, 0]
+    bg_color = edges[0][0]
+    mask = np.all(edges == bg_color, axis=2)
+    edges[mask] = [0,150,0, 0]
+
+
     # Display edges in a frame
     cv2.imshow('In Py Feelings',edges)
     cv2.imshow('art',art)
@@ -24,27 +37,30 @@ while(1):
     k = cv2.waitKey(5) & 0xFF
     if k == 27:
         break
-
+    os.remove("edges.jpg")
 
 # Close the window
 cap.release()
+os.remove("edges.jpg")
 
 # De-allocate any associated memory usage
-cv2.destroyAllWindows()'''
+cv2.destroyAllWindows()
 
 
 
-'''Here is a test'''
+'''
 
 import cv2
 import numpy as np
 
 # create an overlay image. You can use any image
 background = cv2.imread('test.png')
+background = background[0:100,0:200]
 # Open the camera
 cap = cv2.VideoCapture(0)
 # Set initial value of weights
 alpha = 0.4
+gamma = 1-0.4
 while True:
     # read the frame
     ret, frame = cap.read()
@@ -53,9 +69,9 @@ while True:
     edges = cv2.Canny(frame,100,200)
 
     # Select the region in the frame where we want to add the image and add the images using cv2.addWeighted()
-    added_image = cv2.addWeighted(edges[0:100,0:100],alpha,background[0:100,0:100],1-alpha,0)
+    added_image = cv2.addWeighted(edges,alpha,background,gamma,0)
     # Change the region with the result
-    edges[150:200,150:200] = added_image
+    edges = added_image
     # For displaying current value of alpha(weights)
 
     cv2.imshow('a',frame)
@@ -67,3 +83,4 @@ while True:
 # Release the camera and destroy all windows
 cap.release()
 cv2.destroyAllWindows()
+'''
