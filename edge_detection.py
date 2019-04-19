@@ -7,7 +7,7 @@ import os
 
 # capture frames using cap
 cap = cv2.VideoCapture(0)
-art = cv2.imread('test.png',0)
+art = cv2.imread('test.png')
 
 while(1):
 
@@ -22,12 +22,17 @@ while(1):
     cv2.imwrite("edges.jpg", edges)
     edges = cv2.imread("edges.jpg")
 
-    edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGBA)
-    edges[np.all(edges == [0,0,255], axis=2)] = [0, 0, 0, 0]
+    edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGB)
+    edges[np.all(edges == [0,0,255], axis=2)] = [0, 0, 0]
     bg_color = edges[0][0]
     mask = np.all(edges == bg_color, axis=2)
-    edges[mask] = [0,150,0, 0]
+    edges[mask] = [0,0,150]
 
+    #test here
+    '''for x in range(100):
+        for y in range(200):
+            pixel = art[x,y]
+            edges[mask] = pixel'''
 
     # Display edges in a frame
     cv2.imshow('In Py Feelings',edges)
