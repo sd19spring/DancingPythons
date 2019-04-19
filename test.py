@@ -14,10 +14,10 @@ sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 def test_confirmation(confirmation):
     if confirmation == 'Y':
         uri = results['tracks']['items'][1]['uri']
-        return
+        break
     elif confirmation == 'N':
         print('Noooo')
-        return
+        break
     else:
         print('Please answer the question again. Type Y or N and then hit enter.')
         confirmation = input('Is the song ' + results['tracks']['items'][1]['name'] + ' by ' + results['tracks']['items'][1]['artists'][0]['name'] + '? Y/N \n')

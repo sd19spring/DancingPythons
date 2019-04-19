@@ -29,10 +29,10 @@ while(1):
     edges[mask] = [0,0,150]
 
     #test here
-    '''for x in range(100):
+    for x in range(100):
         for y in range(200):
             pixel = art[x,y]
-            edges[mask] = pixel'''
+            edges[mask] = pixel
 
     # Display edges in a frame
     cv2.imshow('In Py Feelings',edges)
