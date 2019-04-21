@@ -1,5 +1,3 @@
-# shows audio analysis for the given track
-
 from __future__ import print_function    # (at top of module)
 from spotipy.oauth2 import SpotifyClientCredentials
 import json
@@ -19,18 +17,10 @@ class SearchError(Exception):
 
 def test_confirmation(confirmation):
     if confirmation == 'Y':
-<<<<<<< HEAD:test.py
         return results['tracks']['items'][0]['uri']
     elif confirmation == 'N':
         confirmation2 = input('Is the song ' + results['tracks']['items'][1]['name'] + ' by ' + results['tracks']['items'][1]['artists'][0]['name'] + '? Y/N \n')
         return test_confirmation2(confirmation2)
-=======
-        uri = results['tracks']['items'][1]['uri']
-        break
-    elif confirmation == 'N':
-        print('Noooo')
-        break
->>>>>>> 1f9ed87a380c691d5631e8d4476bda40365a1283:music_to_mood.py
     else:
         print('Please answer the question again. Type Y or N and then hit enter.')
         confirmation = input('Is the song ' + results['tracks']['items'][0]['name'] + ' by ' + results['tracks']['items'][0]['artists'][0]['name'] + '? Y/N \n')
