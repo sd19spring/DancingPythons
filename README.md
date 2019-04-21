@@ -1,4 +1,4 @@
-### Dancing Pythons
+# Dancing Pythons
 Create an entertaining and stimulating visual at your next party or hangout! Using your computer's webcam, Dancing Pythons will create silhouettes of you and your friends as you dance about on a colorful background. By inputting a Spotify song, Dancing Pythons is able to select a background that matches the mood - slow, wavy blues might greet you as you sway back and forth to Adele while flashy reds can psyche you up for a punk song! 
 
 ## Getting Started
