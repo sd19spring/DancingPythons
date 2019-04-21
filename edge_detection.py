@@ -34,10 +34,10 @@ while(1):
     #here we are trying to test converting black pixels to
     #a specific color that depends on its location and the color
     #of the same pixel in the generated art
-    for x in range(100):
+    '''for x in range(100):
         for y in range(200):
             pixel = art[x,y]
-            edges[mask] = pixel
+            edges[mask] = pixel'''
 
     # Display edges image in a frame
     cv2.imshow('In Py Feelings',edges)
