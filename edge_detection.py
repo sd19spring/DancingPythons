@@ -1,3 +1,4 @@
+#things to import
 import numpy as np
 import cv2
 from PIL import Image, ImageFont, ImageDraw
@@ -18,23 +19,27 @@ while(1):
     edges = cv2.Canny(frame,100,200)
 
 
-
+    #turns the frame of edges into an image
+    #at this point the image is a black and white where white pixels are edges
     cv2.imwrite("edges.jpg", edges)
     edges = cv2.imread("edges.jpg")
 
+    #here every black pixel is converted to another constant color
     edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGB)
     edges[np.all(edges == [0,0,255], axis=2)] = [0, 0, 0]
     bg_color = edges[0][0]
     mask = np.all(edges == bg_color, axis=2)
     edges[mask] = [0,0,150]
 
-    #test here
+    #here we are trying to test converting black pixels to
+    #a specific color that depends on its location and the color
+    #of the same pixel in the generated art
     for x in range(100):
         for y in range(200):
             pixel = art[x,y]
             edges[mask] = pixel
 
-    # Display edges in a frame
+    # Display edges image in a frame
     cv2.imshow('In Py Feelings',edges)
     cv2.imshow('art',art)
 
@@ -42,6 +47,7 @@ while(1):
     k = cv2.waitKey(5) & 0xFF
     if k == 27:
         break
+    #remove each frame that was converted to an image to
     os.remove("edges.jpg")
 
 # Close the window
@@ -53,8 +59,8 @@ cv2.destroyAllWindows()
 
 
 
+#past testing; please ignore
 '''
-
 import cv2
 import numpy as np
 
