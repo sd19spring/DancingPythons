@@ -45,7 +45,7 @@ def test_confirmation3(confirmation3):
         raise SearchError('Your search did not yield the song you were looking for in the top 3 results. Please rerun the program and try again. Check your spelling!')
     else:
         print('Please answer the question again. Type Y or N and then hit enter.')
-        confirmation3 = input('Is the song ' + results['tracks']['items'][1]['name'] + ' by ' + results['tracks']['items'][1]['artists'][0]['name'] + '? Y/N \n')
+        confirmation3 = input('Is the song ' + results['tracks']['items'][2]['name'] + ' by ' + results['tracks']['items'][2]['artists'][0]['name'] + '? Y/N \n')
         test_confirmation3(confirmation3)
 
 search_input = '"' + input('What song do you want to dance to? Please enter the track title. \n') + '"'
