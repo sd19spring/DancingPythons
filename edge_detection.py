@@ -26,10 +26,10 @@ while(1):
 
     #here every black pixel is converted to another constant color
     edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGB)
-    edges[np.all(edges == [0,0,255], axis=2)] = [0, 0, 0]
+    '''edges[np.all(edges == [0,0,255], axis=2)] = [0, 0, 0]
     bg_color = edges[0][0]
     mask = np.all(edges == bg_color, axis=2)
-    edges[mask] = [0,0,150]
+    edges[mask] = [0,0,150]'''
 
     #here we are trying to test converting black pixels to
     #a specific color that depends on its location and the color
@@ -38,6 +38,16 @@ while(1):
         for y in range(200):
             pixel = art[x,y]
             edges[mask] = pixel'''
+
+    #here we are trying to transfer every white pixel to the art; the opposite of other approaches
+    positions = []
+    for x in range(100):
+        for y in range(200):
+            if edges.getpixel((x,y)) == [255,255,255]:
+                positions[y] = (x,y)
+
+    for (x,y) in positions:
+        
 
     # Display edges image in a frame
     cv2.imshow('In Py Feelings',edges)
