@@ -5,7 +5,7 @@ from matplotlib import pyplot as py
 import os
 
 art = Image.open('myart.png')
-edges = Image.open('edges.jpg')
+edges = Image.open('edges.png')
 edges = edges.resize((350,350))
 
 x_size = edges.size[0]
@@ -14,11 +14,11 @@ y_size = edges.size[1]
 '''print(edges.size)
 print(art.size)'''
 
-'''edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGB)
+edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGB)
 edges[np.all(edges == [0,0,255], axis=2)] = [0, 0, 0]
 bg_color = edges[0][0]
 mask = np.all(edges == bg_color, axis=2)
-edges[mask] = [0,0,150]'''
+edges[mask] = [0,0,150]
 
 
 #test here
