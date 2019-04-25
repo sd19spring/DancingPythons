@@ -8,11 +8,10 @@ import os
 #initializing colors
 white = [255,255,255]
 black = [0,0,0]
-outline_color = [250,40,2]
 
 # capture frames using cap
 cap = cv2.VideoCapture(0)
-art = cv2.imread('myart_sized.png')
+art = cv2.imread('myart.png')
 
 while(1):
 
@@ -20,24 +19,10 @@ while(1):
     ret, frame = cap.read()
 
     # finds edges in the input frame and
-    edges = cv2.Canny(frame,100,200)
+    edges = cv2.Canny(frame,50,120)
 
-    #here every black pixel is converted to another constant color
+    #here edges is converted to have the same number of channels
     edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGB)
-
-    #changing the trace color to black
-    edges[np.all(edges == [255,255,255], axis=2)] = white
-    whites = edges[np.all(edges == [255,255,255], axis=2)]
-    outline = np.all(edges == whites[0][0], axis=2)
-    edges[outline] = outline_color
-
-    '''#changing the backgroung color to white
-    edges[np.all(edges == [0,0,255], axis=2)] = black
-    backgound = edges[0][0]
-    backgound = np.all(edges == backgound, axis=2)
-    edges[backgound] = black'''
-
-
 
     display = cv2.add(art,edges)
     # Display edges image in a frame

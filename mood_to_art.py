@@ -161,7 +161,7 @@ def test_image(filename, x_size=350, y_size=350):
     im.save(filename)
 
 
-def generate_art(filename, x_size=350, y_size=350):
+def generate_art(filename, x_size=640, y_size=480):
     """Generate computational art and save as an image file.
 
     Args:
