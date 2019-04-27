@@ -11,7 +11,7 @@ black = [0,0,0]
 
 # capture frames using cap
 cap = cv2.VideoCapture(0)
-art = cv2.imread('myart.png')
+art = cv2.imread('myart_sized.png')
 
 while(1):
 
@@ -19,7 +19,7 @@ while(1):
     ret, frame = cap.read()
 
     # finds edges in the input frame and
-    edges = cv2.Canny(frame,50,120)
+    edges = cv2.Canny(frame,50,220)
 
     #here edges is converted to have the same number of channels
     edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGB)
