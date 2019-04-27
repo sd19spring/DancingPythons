@@ -1,11 +1,11 @@
 """
 Generating Computational Art
 Course: Software Design
+
 @author: Anthony Krichevskiy
 """
 
 import random
-import music_to_mood
 from PIL import Image
 
 
@@ -205,9 +205,9 @@ def generate_art(filename, x_size=640, y_size=480, red_min=0, red_max=255, green
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
     # Functions for red, green, and blue channels - where the magic happens!
-    red_function = build_random_function(7, 9)
-    green_function = build_random_function(7, 9)
-    blue_function = build_random_function(5, 7)
+    red_function = build_random_function(5, 7)
+    green_function = build_random_function(5, 7)
+    blue_function = build_random_function(3, 5)
 
     # Create image and loop over all pixels
     im = Image.new("RGB", (x_size, y_size))
@@ -225,7 +225,15 @@ def generate_art(filename, x_size=640, y_size=480, red_min=0, red_max=255, green
 
 
 if __name__ == '__main__':
-    if music_to_mood.mood_output() == 'happy':
-        generate_art('test.png', x_size=300, y_size=300, red_min=255, red_max=255, green_min=100, green_max=255, blue_min=0, blue_max=150)
-    else:
-        print('Sad song')
+    # import doctest
+    # doctest.testmod()
+    # doctest.run_docstring_examples(build_random_function, globals(), verbose = True)
+
+    # Create some computational art!
+    # TODO: Un-comment the generate_art function call after you
+    #       implement remap_interval and evaluate_random_function
+    generate_art("myart7.png")
+
+    # Test that PIL is installed correctly
+    # TODO: Comment or remove this function call after testing PIL install
+    #   test_image("noise.png")
