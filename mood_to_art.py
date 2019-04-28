@@ -6,6 +6,7 @@ Course: Software Design
 
 import random
 import music_to_mood
+import math
 from PIL import Image
 
 
@@ -34,13 +35,15 @@ def build_random_function(min_depth, max_depth):
     #Determine depth of the function. Only really used to determine if base case is triggered.
     from random import randint
     depth = randint(min_depth, max_depth)
-    #Base case that ends recursion. All functions with depth = 1 must be either "x" or "y"
+    #Base case that ends recursion. All functions with depth = 1 must be either "x" or "y" or "t"
     if depth == 1:
-        generator = randint(1, 2)
+        generator = randint(1, 3)
         if generator == 1:
             function.append("x")
         if generator == 2:
             function.append("y")
+        if generator == 3:
+            function.append("t")
         return function
     else:
     #A random integer generator determines which of the 6 functions will be used.
@@ -75,8 +78,8 @@ def build_random_function(min_depth, max_depth):
             return function
 
 
-def evaluate_random_function(f, x, y):
-    """Evaluate the random function f with inputs x,y.
+def evaluate_random_function(f, x, y, t):
+    """Evaluate the random function f with inputs x,y,t.
 
     The representation of the function f is defined in the assignment write-up.
 
@@ -84,53 +87,55 @@ def evaluate_random_function(f, x, y):
         f: the function to evaluate
         x: the value of x to be used to evaluate the function
         y: the value of y to be used to evaluate the function
+        t: the value of t to be used to evaluate the function
 
     Returns:
         The function value
 
     Examples:
-        >>> evaluate_random_function(["x"],-0.5, 0.75)
+        >>> evaluate_random_function(["x"],-0.5, 0.75, 0.66)
         -0.5
-        >>> evaluate_random_function(["y"],0.1,0.02)
+        >>> evaluate_random_function(["y"],0.1,0.02, 0.45)
         0.02
-        >>> evaluate_random_function(["sin_pi", ["cos_pi", ["x"]]], -0.5, 0)
+        >>> evaluate_random_function(["sin_pi", ["cos_pi", ["t"]]], 0.5, 0, -0.5)
         0
-        >>> evaluate_random_function(["prod", ["prod", ["y"], ["sin_pi", ["x"]]], ["sin_pi", ["y"]]], 0.5, -0.5)
+        >>> evaluate_random_function(["prod", ["prod", ["y"], ["sin_pi", ["x"]]], ["sin_pi", ["t"]]], 0.5, -0.5, -0.5)
         0.5
         >>> evaluate_random_function(["avg", ["prod", ["x"], ["y"]], ["sin_pi", ["x"]]], 0.5, 0.82)
         0.705
         >>> evaluate_random_function(["square", ["avg", ["sin_pi", ["y"]], ["cos_pi", ["x"]]]], 0, (1/6))
         0.5625
-        >>> evaluate_random_function(["root_abs", ["x"]], -0.09, 1)
+        >>> evaluate_random_function(["root_abs", ["t"]], 0.2, 1, -0.09)
         0.3
     """
     #The first term of the function list determines which function is called, therefore, conditionals are used.
-    import math
     if f[0] == "prod":
-        return evaluate_random_function(f[1], x, y) * evaluate_random_function(f[2], x, y)
+        return evaluate_random_function(f[1], x, y, t) * evaluate_random_function(f[2], x, y, t)
     if f[0] == "avg":
-        return 0.5 * (evaluate_random_function(f[1], x, y) + evaluate_random_function(f[2], x, y))
+        return 0.5 * (evaluate_random_function(f[1], x, y, t) + evaluate_random_function(f[2], x, y, t))
     if f[0] == "cos_pi":
     #Cos_pi and sin_pi were having problems returning numbers in scientific notation that were very very close to 0.
     #Therefore, I implemented this conditional which returns 0 when cos_pi or sin_pi are within 0.01 of 0.
-        if math.cos(math.pi * evaluate_random_function(f[1], x, y)) < 0.01 and math.cos(math.pi * evaluate_random_function(f[1], x, y)) > -0.01:
+        if math.cos(math.pi * evaluate_random_function(f[1], x, y, t)) < 0.01 and math.cos(math.pi * evaluate_random_function(f[1], x, y, t)) > -0.01:
             return 0
         else:
-            return math.cos(math.pi * evaluate_random_function(f[1], x, y))
+            return math.cos(math.pi * evaluate_random_function(f[1], x, y, t))
     if f[0] == "sin_pi":
-        if math.sin(math.pi * evaluate_random_function(f[1], x, y)) < 0.01 and math.sin(math.pi * evaluate_random_function(f[1], x, y)) > -0.01:
+        if math.sin(math.pi * evaluate_random_function(f[1], x, y, t)) < 0.01 and math.sin(math.pi * evaluate_random_function(f[1], x, y, t)) > -0.01:
             return 0
         else:
-            return math.sin(math.pi * evaluate_random_function(f[1], x, y))
+            return math.sin(math.pi * evaluate_random_function(f[1], x, y, t))
     if f[0] == "square":
-        return evaluate_random_function(f[1], x, y)**2
+        return evaluate_random_function(f[1], x, y, t)**2
     if f[0] == "root_abs":
     #You cannot take the square root of the negative, so I had to take the square root of the absolute value.
-        return abs(evaluate_random_function(f[1], x, y))**0.5
+        return abs(evaluate_random_function(f[1], x, y, t))**0.5
     if f[0] == "x":
         return x
     if f[0] == "y":
         return y
+    if f[0] == "t":
+        return t
 
 
 def remap_interval(val,
@@ -250,7 +255,7 @@ def generate_art(filename, x_size=640, y_size=480):
 
 
 if __name__ == '__main__':
-    if music_to_mood.mood_output() == 'happy':
-        generate_art('test.png', x_size=300, y_size=300, red_min=255, red_max=255, green_min=100, green_max=255, blue_min=0, blue_max=150)
-    else:
-        print('Sad song')
+    #if music_to_mood.mood_output() == 'happy':
+    generate_art('test.png', x_size=300, y_size=300, red_min=255, red_max=255, green_min=100, green_max=255, blue_min=0, blue_max=150)
+    #else:
+        #print('Sad song')
