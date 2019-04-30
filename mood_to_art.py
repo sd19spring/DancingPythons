@@ -201,33 +201,7 @@ def color_map(val, min_rgb=0, max_rgb=255):
     color_code = remap_interval(val, -1, 1, min_rgb, max_rgb)
     return int(color_code)
 
-
-<<<<<<< HEAD
-def generate_art(filename, x_size=640, y_size=480, red_min=0, red_max=255, green_min=0, green_max=255, blue_min=0, blue_max=255):
-=======
-def test_image(filename, x_size=350, y_size=350):
-    """Generate a test image with random pixels and save as an image file.
-
-    Args:
-        filename: string filename for image (should be .png)
-        x_size, y_size: optional args to set image dimensions (default: 350)
-    """
-    # Create image and loop over all pixels
-    im = Image.new("RGB", (x_size, y_size))
-    pixels = im.load()
-    for i in range(x_size):
-        for j in range(y_size):
-            x = remap_interval(i, 0, x_size, -1, 1)
-            y = remap_interval(j, 0, y_size, -1, 1)
-            pixels[i, j] = (random.randint(0, 255),  # Red channel
-                            random.randint(0, 255),  # Green channel
-                            random.randint(0, 255))  # Blue channel
-
-    im.save(filename)
-
-
-def generate_art(filename, x_size=640, y_size=480):
->>>>>>> a2f58cd95510483f1467e4fc62b01d29464585a0
+def generate_art(filename, x_size=640, y_size=480, t, red_min=0, red_max=255, green_min=0, green_max=255, blue_min=0, blue_max=255):
     """Generate computational art and save as an image file.
 
     Args:
@@ -247,9 +221,9 @@ def generate_art(filename, x_size=640, y_size=480):
             x = remap_interval(i, 0, x_size, -1, 1)
             y = remap_interval(j, 0, y_size, -1, 1)
             pixels[i, j] = (
-                color_map(evaluate_random_function(red_function, x, y), min_rgb=red_min, max_rgb=red_max),
-                color_map(evaluate_random_function(green_function, x, y), min_rgb=green_min, max_rgb=green_max),
-                color_map(evaluate_random_function(blue_function, x, y), min_rgb=blue_min, max_rgb=blue_max)
+                color_map(evaluate_random_function(red_function, x, y, t), min_rgb=red_min, max_rgb=red_max),
+                color_map(evaluate_random_function(green_function, x, y, t), min_rgb=green_min, max_rgb=green_max),
+                color_map(evaluate_random_function(blue_function, x, y, t), min_rgb=blue_min, max_rgb=blue_max)
             )
     im.save(filename)
 

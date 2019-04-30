@@ -18,25 +18,31 @@ def test_confirmation(confirmation, results):
     if confirmation == 'Y':
         return results['tracks']['items'][0]['uri']
     elif confirmation == 'N':
-        confirmation2 = input('Is the song ' + results['tracks']['items'][1]['name'] + ' by ' + results['tracks']['items'][1]['artists'][0]['name'] + '? Y/N \n')
-        return test_confirmation2(confirmation2)
+        if len(results['tracks']['items']) > 1:
+            confirmation2 = input('Is the song ' + results['tracks']['items'][1]['name'] + ' by ' + results['tracks']['items'][1]['artists'][0]['name'] + '? Y/N \n')
+            return test_confirmation2(confirmation2, results)
+        else:
+            raise SearchError('Your search only yielded that 1 result. Please rerun the program and try again. Check your spelling!')
     else:
         print('Please answer the question again. Type Y or N and then hit enter.')
         confirmation = input('Is the song ' + results['tracks']['items'][0]['name'] + ' by ' + results['tracks']['items'][0]['artists'][0]['name'] + '? Y/N \n')
-        test_confirmation(confirmation)
+        test_confirmation(confirmation, results)
 
-def test_confirmation2(confirmation2):
+def test_confirmation2(confirmation2, results):
     if confirmation2 == 'Y':
         return results['tracks']['items'][1]['uri']
     elif confirmation2 == 'N':
-        confirmation3 = input('Is the song ' + results['tracks']['items'][2]['name'] + ' by ' + results['tracks']['items'][2]['artists'][0]['name'] + '? Y/N \n')
-        test_confirmation3(confirmation3)
+        if len(results['tracks']['items']) > 2:
+            confirmation3 = input('Is the song ' + results['tracks']['items'][2]['name'] + ' by ' + results['tracks']['items'][2]['artists'][0]['name'] + '? Y/N \n')
+            test_confirmation3(confirmation3, results)
+        else:
+            raise SearchError('Your search only yielded those 2 results. Please rerun the program and try again. Check your spelling!')
     else:
         print('Please answer the question again. Type Y or N and then hit enter.')
         confirmation2 = input('Is the song ' + results['tracks']['items'][1]['name'] + ' by ' + results['tracks']['items'][1]['artists'][0]['name'] + '? Y/N \n')
-        test_confirmation2(confirmation2)
+        test_confirmation2(confirmation2, results)
 
-def test_confirmation3(confirmation3):
+def test_confirmation3(confirmation3, results):
     if confirmation3 == 'Y':
         return results['tracks']['items'][2]['uri']
     elif confirmation3 == 'N':
@@ -45,7 +51,7 @@ def test_confirmation3(confirmation3):
     else:
         print('Please answer the question again. Type Y or N and then hit enter.')
         confirmation3 = input('Is the song ' + results['tracks']['items'][2]['name'] + ' by ' + results['tracks']['items'][2]['artists'][0]['name'] + '? Y/N \n')
-        test_confirmation3(confirmation3)
+        test_confirmation3(confirmation3, results)
 
 def mood_output():
     search_input = '"' + input('What song do you want to dance to? Please enter the track title. \n') + '"'
@@ -56,7 +62,13 @@ def mood_output():
     confirmation = input('Is the song ' + results['tracks']['items'][0]['name'] + ' by ' + results['tracks']['items'][0]['artists'][0]['name'] + '? Y/N \n')
     uri = test_confirmation(confirmation, results)
     track_analysis = sp.audio_features(uri)
-    if track_analysis[0]['valence'] <= 0.5:
-        return 'happy'
-    else:
-        return 'sad'
+    if track_analysis[0]['valence'] <= 0.5 and track_analysis[0]['energy'] <= 0.5:
+        return 'negative, low energy'
+    elif track_analysis[0]['valence'] <= 0.5 and track_analysis[0]['energy'] > 0.5:
+        return 'negative, high energy'
+    elif track_analysis[0]['valence'] > 0.5 and track_analysis[0]['energy'] <= 0.5:
+        return 'positive, low energy'
+    elif track_analysis[0]['valence'] > 0.5 and track_analysis[0]['energy'] > 0.5:
+        return 'positive, high energy'
+
+mood_output()
