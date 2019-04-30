@@ -11,7 +11,7 @@ black = [0,0,0]
 
 # capture frames using cap
 cap = cv2.VideoCapture(0)
-art = cv2.imread('myart_sized.png')
+#art = cv2.imread('myart_sized.png')
 
 while(1):
 

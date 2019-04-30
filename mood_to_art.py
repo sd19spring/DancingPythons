@@ -8,6 +8,7 @@ import random
 import music_to_mood
 import math
 from PIL import Image
+import moviepy.editor as mpy
 
 
 def build_random_function(min_depth, max_depth):
@@ -201,7 +202,7 @@ def color_map(val, min_rgb=0, max_rgb=255):
     color_code = remap_interval(val, -1, 1, min_rgb, max_rgb)
     return int(color_code)
 
-def generate_art(filename, x_size=640, y_size=480, t, red_min=0, red_max=255, green_min=0, green_max=255, blue_min=0, blue_max=255):
+def generate_art(t = 2, x_size=640, y_size=480, red_min=0, red_max=255, green_min=0, green_max=255, blue_min=0, blue_max=255):
     """Generate computational art and save as an image file.
 
     Args:
@@ -225,11 +226,17 @@ def generate_art(filename, x_size=640, y_size=480, t, red_min=0, red_max=255, gr
                 color_map(evaluate_random_function(green_function, x, y, t), min_rgb=green_min, max_rgb=green_max),
                 color_map(evaluate_random_function(blue_function, x, y, t), min_rgb=blue_min, max_rgb=blue_max)
             )
-    im.save(filename)
+    return im
+
+def generate_list(duration = 18):
+    for i in range(int(duration/2)):
+        index = str(i)
+        im = generate_art()
+        im.save('/images/%' %(index))
 
 
 if __name__ == '__main__':
     #if music_to_mood.mood_output() == 'happy':
-    generate_art('test.png', x_size=300, y_size=300, red_min=255, red_max=255, green_min=100, green_max=255, blue_min=0, blue_max=150)
+    generate_list()
     #else:
         #print('Sad song')
