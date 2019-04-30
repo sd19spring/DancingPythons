@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Dancing Pythons</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/one-page-wonder.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Dancing Pythons</a>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0">Dance the Night Away</h1>
+        <h2 class="masthead-subheading mb-0">with customized moving art!</h2>
+        <a href="https://github.com/sd19spring/final-project-dhara-anthony-mahima" class="btn btn-primary btn-xl rounded-pill mt-5">Download Here</a>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="p-5">
+            <img class="img-fluid" src="img/team1.png" alt=""> #insert gif here!
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="p-5">
+            <h2 class="display-4">The Big Idea</h2>
+            <p>Dancing Pythons is a fun tool for dancing with friends at a party! Our goal was to create a live visual that places a silhouette of you dancing over moving art that is generated based on the mood of the song!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2">
+          <div class="p-5">
+            <img class="img-fluid" src="img/onlyedges.png" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <div class="p-5">
+            <h2 class="display-4">How it works</h2>
+            <p>There are two components to this project: generating art based on the music and developing a live silhouette. The first component mentioned (the generative art) uses mini project 2 and expands it so that the art is only developed using certain colors. The certain colors are determined using Spotify API. Spotify tells us the mood of the song and depending on those values we input certain ranges that the art can use. The generative art also moves to the beat of the music! The second part mentioned (the silhouette) uses Open CV to take in the camera frame and detect edges. It then manipulates these edges so that we have an array of black and white pixels. The white pixels are the trace and the black pixels are the background. Using Open CV’s image addition, we can add the art to the trace. Because a black pixel value is [0,0,0], it does not show up in the final display.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-1">
+          <div class="p-5">
+            <img class="img-fluid" src="img/team1.png" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-2">
+          <div class="p-5">
+            <h2 class="display-4">How we got here</h2>
+            <p>We began by creating a minimal viable project. For us, that was getting Open CV to detect edges and produce a trace. Then, we attempted to place the silhouette over art and generate art based on mood. Once we could do this using single images, we developed moving art that corresponded to the tempo of the music playing. Lastly, we worked on placing the sihouette over moving art.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row align-items-center bg-warning">
+        <div class="col-lg-6 order-lg-1">
+          <div class="p-5">
+            <h2 class="display-4">Download!</h2>
+            <p>To download and use our program, visit our GitHub and follow the instructions on the README. All you have to do is install a few packages and run some code!</p>
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-2">
+          <div class="p-5">
+            <a href="https://github.com/sd19spring/final-project-dhara-anthony-mahima" class="btn btn-primary btn-xl rounded-pill mt-5">Download Here</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
