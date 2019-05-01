@@ -8,7 +8,6 @@ import random
 import music_to_mood
 import math
 from PIL import Image
-import moviepy.editor as mpy
 
 
 def build_random_function(min_depth, max_depth):
@@ -230,9 +229,9 @@ def generate_art(t = 2, x_size=640, y_size=480, red_min=0, red_max=255, green_mi
 
 def generate_list(duration = 18):
     for i in range(int(duration/2)):
-        index = str(i)
+        location = 'images/'+ str(i) + '.png'
         im = generate_art()
-        im.save('/images/%' %(index))
+        im.save(location)
 
 
 if __name__ == '__main__':
