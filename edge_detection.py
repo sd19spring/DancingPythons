@@ -5,37 +5,40 @@ from PIL import Image, ImageFont, ImageDraw
 from matplotlib import pyplot as py
 import os
 
-#initializing colors
-white = [255,255,255]
-black = [0,0,0]
-
-# capture frames using cap
-cap = cv2.VideoCapture(0)
-art = cv2.imread('myart_sized.png')
-
-while(1):
-
-    # reads frames from a camera
-    ret, frame = cap.read()
-
-    # finds edges in the input frame and
+def get_edges(frame):
     edges = cv2.Canny(frame,50,220)
-
-    #here edges is converted to have the same number of channels
     edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGB)
+    return edges
 
+def get_new_art(index):
+    location = 'images/'+ str(index) + '.png'
+    art = cv2.imread(location)
+    return art
+
+def compile(art,edges):
     display = cv2.add(art,edges)
-    # Display edges image in a frame
-    cv2.imshow('Dancing Pythons',edges)
-    cv2.imshow('art',art)
-    cv2.imshow('Both',display)
+    return display
 
-    # Wait for Esc key to stop
-    k = cv2.waitKey(5) & 0xFF
-    if k == 27:
-        break
+def main(duration = 5000):
+    cap = cv2.VideoCapture(0)
 
-# Close the window
-cap.release()
-# De-allocate any associated memory usage
-cv2.destroyAllWindows()
+    index = 0
+    for time in range(duration):
+        ret, frame = cap.read()
+
+        edges = get_edges(frame)
+
+        if time%30 == 0:
+            index += 1
+            art = get_new_art(index)
+
+        cv2.imshow('Dancing Pythons',compile(art,edges))
+
+        k = cv2.waitKey(5) & 0xFF
+        if k == 27:
+            break
+    cap.release()
+    cv2.destroyAllWindows()
+
+if __name__ == '__main__':
+    main()

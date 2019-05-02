@@ -1,32 +1,46 @@
+#things to import
 import numpy as np
 import cv2
 from PIL import Image, ImageFont, ImageDraw
 from matplotlib import pyplot as py
 import os
-
+import timeit
 
 # capture frames using cap
 cap = cv2.VideoCapture(0)
+art = cv2.imread('1.png')
 
+counter = 0;
 while(1):
-
+    counter +=1
     # reads frames from a camera
     ret, frame = cap.read()
 
     # finds edges in the input frame and
-    edges = cv2.Canny(frame,100,200)
+    edges = cv2.Canny(frame,50,220)
+    #here edges is converted to have the same number of channels
+    edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGB)
 
-    cv2.imshow('In Py Feelings',edges)
+    if counter%50 == 0:
+        art = cv2.imread('6.png')
+
+    elif counter%132 == 0:
+        art = cv2.imread('1.png')
+
+    display = cv2.add(art,edges)
+    # Display edges image in a frame
+    cv2.imshow('Dancing Pythons',edges)
+    cv2.imshow('art',art)
+    cv2.imshow('Both',display)
 
     # Wait for Esc key to stop
     k = cv2.waitKey(5) & 0xFF
     if k == 27:
+
         break
 
-    cv2.imwrite("edges.png", edges)
-
 # Close the window
+#print(counter)
 cap.release()
-
 # De-allocate any associated memory usage
 cv2.destroyAllWindows()
