@@ -201,7 +201,14 @@ def color_map(val, min_rgb=0, max_rgb=255):
     color_code = remap_interval(val, -1, 1, min_rgb, max_rgb)
     return int(color_code)
 
-def generate_art(t = 2, x_size=640, y_size=480, red_min=0, red_max=255, green_min=0, green_max=255, blue_min=0, blue_max=255):
+def range_finder():
+    ranges = {'red_min':0,'red_max':255,
+                'blue_min':0,'blue_max':255,
+                'green_min':0,'green_max':255}
+
+    return ranges
+
+def generate_art(ranges, t = 2, x_size=640, y_size=480):
     """Generate computational art and save as an image file.
 
     Args:
@@ -212,6 +219,13 @@ def generate_art(t = 2, x_size=640, y_size=480, red_min=0, red_max=255, green_mi
     red_function = build_random_function(7, 9)
     green_function = build_random_function(7, 9)
     blue_function = build_random_function(5, 7)
+
+    red_min = ranges['red_min']
+    red_max = ranges['red_max']
+    blue_min = ranges['blue_min']
+    blue_max = ranges['blue_max']
+    green_min = ranges['green_min']
+    green_max = ranges['green_max']
 
     # Create image and loop over all pixels
     im = Image.new("RGB", (x_size, y_size))
@@ -227,15 +241,13 @@ def generate_art(t = 2, x_size=640, y_size=480, red_min=0, red_max=255, green_mi
             )
     return im
 
-def generate_list(duration = 18):
+def main(duration = 18):
     for i in range(int(duration/2)):
         location = 'images/'+ str(i) + '.png'
-        im = generate_art()
+        ranges = range_finder()
+        im = generate_art(ranges)
         im.save(location)
 
 
 if __name__ == '__main__':
-    #if music_to_mood.mood_output() == 'happy':
-    generate_list()
-    #else:
-        #print('Sad song')
+    main(dur)

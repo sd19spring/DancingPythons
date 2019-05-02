@@ -53,7 +53,7 @@ def test_confirmation3(confirmation3, results):
         confirmation3 = input('Is the song ' + results['tracks']['items'][2]['name'] + ' by ' + results['tracks']['items'][2]['artists'][0]['name'] + '? Y/N \n')
         test_confirmation3(confirmation3, results)
 
-def mood_output():
+def main():
     search_input = '"' + input('What song do you want to dance to? Please enter the track title. \n') + '"'
     results = sp.search(q=search_input, limit=3, type='track')
     if len(results['tracks']['items']) == 0:
@@ -63,12 +63,15 @@ def mood_output():
     uri = test_confirmation(confirmation, results)
     track_analysis = sp.audio_features(uri)
     if track_analysis[0]['valence'] <= 0.5 and track_analysis[0]['energy'] <= 0.5:
-        return 'negative, low energy'
+        mood = ['negative, low energy']
     elif track_analysis[0]['valence'] <= 0.5 and track_analysis[0]['energy'] > 0.5:
-        return 'negative, high energy'
+        mood = ['negative, high energy']
     elif track_analysis[0]['valence'] > 0.5 and track_analysis[0]['energy'] <= 0.5:
-        return 'positive, low energy'
+        mood = ['positive, low energy']
     elif track_analysis[0]['valence'] > 0.5 and track_analysis[0]['energy'] > 0.5:
-        return 'positive, high energy'
+        mood = ['positive, high energy']
+    dur = track_analysis[0]['duration_ms']
+    return mood, dur
 
-mood_output()
+if __name__ == '__main__':
+    main()

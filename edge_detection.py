@@ -41,4 +41,4 @@ def main(duration = 5000):
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    main()
+    main(dur)
