@@ -229,7 +229,11 @@ def generate_art(filename, x_size=640, y_size=480, t, red_min=0, red_max=255, gr
 
 
 if __name__ == '__main__':
-    #if music_to_mood.mood_output() == 'happy':
+    valence, energy = music_to_mood.mood_output()
+    if valence == 'positive':
+
+
+
     generate_art('test.png', x_size=300, y_size=300, red_min=255, red_max=255, green_min=100, green_max=255, blue_min=0, blue_max=150)
     #else:
         #print('Sad song')
