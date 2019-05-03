@@ -4,29 +4,39 @@ from PIL import Image, ImageFont, ImageDraw
 from matplotlib import pyplot as py
 import os
 
-art = Image.open('myart.png')
-edges = Image.open('edges.png')
-edges = edges.resize((350,350))
+# capture frames using cap
+cap = cv2.VideoCapture(0)
+cap.set(3, 360)
+cap.set(4, 360)
+art = cv2.VideoCapture('art_test.mp4')
 
-x_size = edges.size[0]
-y_size = edges.size[1]
+counter = 0;
+while(1):
+    counter +=1
+    # reads frames from a camera
+    ret, frame = cap.read()
+    ret2, art_frame = art.read()
+    print(art_frame.shape)
+    print(frame.shape)
+    # finds edges in the input frame
+    edges = cv2.Canny(frame,50,220)
+    #here edges is converted to have the same number of channels
+    edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGB)
 
-'''print(edges.size)
-print(art.size)'''
+    display = cv2.add(art_frame,edges)
+    # Display edges image in a frame
+    cv2.imshow('Dancing Pythons',edges)
+    cv2.imshow('art',art)
+    cv2.imshow('Both',display)
 
-edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGB)
-edges[np.all(edges == [0,0,255], axis=2)] = [0, 0, 0]
-bg_color = edges[0][0]
-mask = np.all(edges == bg_color, axis=2)
-edges[mask] = [0,0,150]
+    # Wait for Esc key to stop
+    k = cv2.waitKey(5) & 0xFF
+    if k == 27:
 
+        break
 
-#test here
-for x in range(x_size):
-    for y in range(y_size):
-        xy = (x,y)
-        pixel = art.getpixel(xy)
-        if edges.getpixel(xy) == (0,0,0):
-            edges.putpixel(xy,pixel)
-
-edges.save("edges4.png")
+# Close the window
+#print(counter)
+cap.release()
+# De-allocate any associated memory usage
+cv2.destroyAllWindows()

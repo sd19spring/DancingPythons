@@ -201,14 +201,43 @@ def color_map(val, min_rgb=0, max_rgb=255):
     color_code = remap_interval(val, -1, 1, min_rgb, max_rgb)
     return int(color_code)
 
-def range_finder():
-    ranges = {'red_min':0,'red_max':255,
-                'blue_min':0,'blue_max':255,
-                'green_min':0,'green_max':255}
+def range_finder(mood=['negative', 'low energy']):
+    ranges = {'red_min':0,'red_max':0,
+                'green_min':0,'green_max':0,
+                'blue_min':0,'blue_max':0}
+
+    if mood == ['negative, low energy']:
+        ranges['red_min'] = 0
+        ranges['red_max'] = 165
+        ranges['blue_min'] = 100
+        ranges['blue_max'] = 250
+        ranges['green_min'] = 100
+        ranges['green_max'] = 175
+    if mood == ['positive, low energy']:
+        ranges['red_min'] = 0
+        ranges['red_max'] = 255
+        ranges['blue_min'] = 0
+        ranges['blue_max'] = 255
+        ranges['green_min'] = 0
+        ranges['green_max'] = 255
+    if mood == ['negative, high energy']:
+        ranges['red_min'] = 0
+        ranges['red_max'] = 255
+        ranges['blue_min'] = 0
+        ranges['blue_max'] = 255
+        ranges['green_min'] = 0
+        ranges['green_max'] = 255
+    if mood == ['positive, high energy']:
+        ranges['red_min'] = 0
+        ranges['red_max'] = 255
+        ranges['blue_min'] = 0
+        ranges['blue_max'] = 255
+        ranges['green_min'] = 0
+        ranges['green_max'] = 255
 
     return ranges
 
-def generate_art(ranges, t = 2, x_size=640, y_size=480):
+def generate_art(ranges, t, x_size=640, y_size=480):
     """Generate computational art and save as an image file.
 
     Args:
@@ -235,19 +264,19 @@ def generate_art(ranges, t = 2, x_size=640, y_size=480):
             x = remap_interval(i, 0, x_size, -1, 1)
             y = remap_interval(j, 0, y_size, -1, 1)
             pixels[i, j] = (
-                color_map(evaluate_random_function(red_function, x, y, t), min_rgb=red_min, max_rgb=red_max),
-                color_map(evaluate_random_function(green_function, x, y, t), min_rgb=green_min, max_rgb=green_max),
-                color_map(evaluate_random_function(blue_function, x, y, t), min_rgb=blue_min, max_rgb=blue_max)
+                color_map(evaluate_random_function(red_function, x, y, 2), min_rgb=red_min, max_rgb=red_max),
+                color_map(evaluate_random_function(green_function, x, y, 2), min_rgb=green_min, max_rgb=green_max),
+                color_map(evaluate_random_function(blue_function, x, y, 2), min_rgb=blue_min, max_rgb=blue_max)
             )
     return im
 
-def main(duration = 18):
-    for i in range(int(duration/2)):
-        location = 'images/'+ str(i) + '.png'
-        ranges = range_finder()
-        im = generate_art(ranges)
+def main(mood):
+    for i in range(5):
+        location = 'images/'+ mood[0]+'_'+mood[1] +'/' +str(i) + '.png'
+        ranges = range_finder(mood)
+        im = generate_art(ranges,i)
         im.save(location)
 
 
 if __name__ == '__main__':
-    main(dur)
+    main(mood=['negative', 'low energy'])

@@ -63,15 +63,15 @@ def main():
     uri = test_confirmation(confirmation, results)
     track_analysis = sp.audio_features(uri)
     if track_analysis[0]['valence'] <= 0.5 and track_analysis[0]['energy'] <= 0.5:
-        mood = ['negative, low energy']
+        mood = ['negative', 'low energy']
     elif track_analysis[0]['valence'] <= 0.5 and track_analysis[0]['energy'] > 0.5:
-        mood = ['negative, high energy']
+        mood = ['negative', 'high energy']
     elif track_analysis[0]['valence'] > 0.5 and track_analysis[0]['energy'] <= 0.5:
-        mood = ['positive, low energy']
+        mood = ['positive', 'low energy']
     elif track_analysis[0]['valence'] > 0.5 and track_analysis[0]['energy'] > 0.5:
-        mood = ['positive, high energy']
-    dur = track_analysis[0]['duration_ms']
-    return mood, dur
+        mood = ['positive', 'high energy']
+    #dur = track_analysis[0]['duration_ms']
+    return mood
 
 if __name__ == '__main__':
     main()

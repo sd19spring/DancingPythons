@@ -19,20 +19,20 @@ def compile(art,edges):
     display = cv2.add(art,edges)
     return display
 
-def main(duration = 5000):
+def main(duration = 18):
     cap = cv2.VideoCapture(0)
-
     index = 0
     for time in range(duration):
         ret, frame = cap.read()
 
         edges = get_edges(frame)
 
-        if time%30 == 0:
+        if time%2 == 0:
             index += 1
             art = get_new_art(index)
 
-        cv2.imshow('Dancing Pythons',compile(art,edges))
+        display = compile(art,edges)
+        cv2.imshow('Dancing Pythons',display)
 
         k = cv2.waitKey(5) & 0xFF
         if k == 27:
@@ -41,4 +41,4 @@ def main(duration = 5000):
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    main(dur)
+    main()
