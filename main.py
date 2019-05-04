@@ -5,11 +5,11 @@ import mood_to_art
 import os
 
 def main():
-    mood = music_to_mood.main()
+    mood,duration = music_to_mood.main()
     art = mood_to_art.main(mood)
-    edge_detection.main()
-    for i in range(18/2):
-        location = 'images/'+ str(i) + '.png'
+    edge_detection.main(duration)
+    for i in range(5):
+        location = 'images/'+ mood[0]+'_'+mood[1] +'/' +str(i) + '.png'
         os.remove(location)
 
 if __name__ == '__main__':

@@ -70,8 +70,8 @@ def main():
         mood = ['positive', 'low energy']
     elif track_analysis[0]['valence'] > 0.5 and track_analysis[0]['energy'] > 0.5:
         mood = ['positive', 'high energy']
-    #dur = track_analysis[0]['duration_ms']
-    return mood
+    dur = track_analysis[0]['duration_ms'
+    return mood,dur
 
 if __name__ == '__main__':
     main()

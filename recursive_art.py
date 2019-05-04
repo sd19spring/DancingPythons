@@ -221,19 +221,9 @@ def generate_art(filename, x_size=640, y_size=480, red_min=0, red_max=255, green
                 color_map(evaluate_random_function(green_function, x, y), min_rgb=green_min, max_rgb=green_max),
                 color_map(evaluate_random_function(blue_function, x, y), min_rgb=blue_min, max_rgb=blue_max)
             )
-    im.save(filename)
+    return im
 
 
 if __name__ == '__main__':
-    # import doctest
-    # doctest.testmod()
-    # doctest.run_docstring_examples(build_random_function, globals(), verbose = True)
 
-    # Create some computational art!
-    # TODO: Un-comment the generate_art function call after you
-    #       implement remap_interval and evaluate_random_function
-    generate_art("myart7.png")
-
-    # Test that PIL is installed correctly
-    # TODO: Comment or remove this function call after testing PIL install
-    #   test_image("noise.png")
+    im = generate_art("myart7.png")
