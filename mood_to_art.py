@@ -5,7 +5,6 @@ Course: Software Design
 """
 
 import random
-import music_to_mood
 import math
 from PIL import Image
 
@@ -208,18 +207,18 @@ def range_finder(mood=['negative', 'low energy']):
 
     if mood == ['negative', 'low energy']:
         ranges['red_min'] = 0
-        ranges['red_max'] = 165
+        ranges['red_max'] = 100
         ranges['blue_min'] = 100
         ranges['blue_max'] = 250
         ranges['green_min'] = 100
         ranges['green_max'] = 175
     if mood == ['positive', 'low energy']:
         ranges['red_min'] = 100
-        ranges['red_max'] = 250
+        ranges['red_max'] = 200
         ranges['blue_min'] = 0
-        ranges['blue_max'] = 150
+        ranges['blue_max'] = 100
         ranges['green_min'] = 50
-        ranges['green_max'] = 195
+        ranges['green_max'] = 150
     if mood == ['negative', 'high energy']:
         ranges['red_min'] = 0
         ranges['red_max'] = 255
@@ -236,20 +235,20 @@ def range_finder(mood=['negative', 'low energy']):
         ranges['green_max'] = 255
 
     return ranges
+def new_functions():
+        red_function = build_random_function(7, 9)
+        green_function = build_random_function(7, 9)
+        blue_function = build_random_function(7, 9)
 
-def generate_art(ranges, t, x_size=640, y_size=480):
+        return red_function,green_function,blue_function
+
+def generate_art(ranges, t, red_function, green_function, blue_function, x_size=320, y_size=240):
     """Generate computational art and save as an image file.
 
     Args:
         filename: string filename for image (should be .png)
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
-    # Functions for red, green, and blue channels - where the magic happens!
-    red_function = build_random_function(7, 9)
-    green_function = build_random_function(7, 9)
-    blue_function = build_random_function(5, 7)
-
-    print(ranges)
     red_min = ranges['red_min']
     red_max = ranges['red_max']
     blue_min = ranges['blue_min']
@@ -272,10 +271,12 @@ def generate_art(ranges, t, x_size=640, y_size=480):
     return im
 
 def main(mood):
-    for i in range(5):
+    red_function, green_function, blue_function = new_functions()
+    for i in range(20):
+        time = remap_interval(i,0,20,-1,1)
         location = 'images/'+ mood[0]+'_'+mood[1] +'/' +str(i) + '.png'
         ranges = range_finder(mood)
-        im = generate_art(ranges,i)
+        im = generate_art(ranges,time,red_function, green_function, blue_function)
         im.save(location)
 
 

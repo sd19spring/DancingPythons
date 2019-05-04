@@ -10,8 +10,8 @@ def get_edges(frame):
     edges = cv2.cvtColor(edges, cv2.COLOR_BGR2RGB)
     return edges
 
-def get_new_art(index):
-    location = 'images/'+ str(index) + '.png'
+def get_new_art(mood, index):
+    location = 'images/'+ mood[0]+'_'+mood[1] +'/' +str(index) + '.png'
     art = cv2.imread(location)
     return art
 
@@ -22,8 +22,10 @@ def compile(art,edges):
 def reset_index():
     return 0
 
-def main(duration):
+def main(mood, duration):
     cap = cv2.VideoCapture(0)
+    cap.set(3, 320)
+    cap.set(4, 240)
     index = 0
     for tic in range(duration):
         ret, frame = cap.read()
@@ -31,8 +33,8 @@ def main(duration):
         edges = get_edges(frame)
 
         index += 1
-        art = get_new_art(index)
-        if index == 4:
+        art = get_new_art(mood, index)
+        if index == 19:
             index = reset_index()
 
 
@@ -46,4 +48,4 @@ def main(duration):
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    main(duration)
+    main(mood=['positive','low energy'], duration=5000)
