@@ -34,7 +34,7 @@ def test_confirmation2(confirmation2, results):
     elif confirmation2 == 'N':
         if len(results['tracks']['items']) > 2:
             confirmation3 = input('Is the song ' + results['tracks']['items'][2]['name'] + ' by ' + results['tracks']['items'][2]['artists'][0]['name'] + '? Y/N \n')
-            test_confirmation3(confirmation3, results)
+            return test_confirmation3(confirmation3, results)
         else:
             raise SearchError('Your search only yielded those 2 results. Please rerun the program and try again. Check your spelling!')
     else:
