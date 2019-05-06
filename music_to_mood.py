@@ -1,12 +1,33 @@
-from __future__ import print_function    # (at top of module)
+'''
+music_to_mood.py takes in a song and uses Spotify's API to output a mood that
+falls in one of four categories: 1) negative with high energy 2) negative with
+low energy 3) positive with high energy 4) positive with low energy. The mood
+depends on the valance and energy of the song. This script also plays the given
+song.
+'''
+
+from __future__ import print_function
 from spotipy.oauth2 import SpotifyClientCredentials
 import json
 import spotipy
 import time
+import spotipy.util as util
 import sys
 
-client_credentials_manager = SpotifyClientCredentials('2c49178b39bc423dbb44f1ce220c12bb', 'ecb09ffa5ffe46d2844e1bd07c75659e')
-sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+def setup_credentials():
+    """
+    sets up all the credentials needed for data and to pause/play and returns it
+    """
+    if 'sp' not in globals():
+        scopes = 'user-modify-playback-state'
+        token = util.prompt_for_user_token( 'dpatel3836',
+                                            scopes,
+                                            client_id = '2c49178b39bc423dbb44f1ce220c12bb',
+                                            client_secret = my_secret_id, '25cbe09bd4a8494cb525f7b53c1b726c'
+                                            redirect_uri = 'http://example.com/callback/')
+        sp = spotipy.Spotify(auth=token)
+    return sp
+sp = setup_credentials()
 
 class SearchError(Exception):
     def __init__(self, message):
@@ -54,7 +75,7 @@ def test_confirmation3(confirmation3, results):
         test_confirmation3(confirmation3, results)
 
 def main():
-    search_input = '"' + input('What song do you want to dance to? Please enter the track title. \n') + '"'
+    search_input = '' + input('What song do you want to dance to? Please enter the track title. \n') + '"'
     results = sp.search(q=search_input, limit=3, type='track')
     if len(results['tracks']['items']) == 0:
         sys.tracebacklimit = 0
@@ -62,6 +83,7 @@ def main():
     confirmation = input('Is the song ' + results['tracks']['items'][0]['name'] + ' by ' + results['tracks']['items'][0]['artists'][0]['name'] + '? Y/N \n')
     uri = test_confirmation(confirmation, results)
     track_analysis = sp.audio_features(uri)
+
     if track_analysis[0]['valence'] <= 0.5 and track_analysis[0]['energy'] <= 0.5:
         mood = ['negative', 'low energy']
     elif track_analysis[0]['valence'] <= 0.5 and track_analysis[0]['energy'] > 0.5:
@@ -70,8 +92,8 @@ def main():
         mood = ['positive', 'low energy']
     elif track_analysis[0]['valence'] > 0.5 and track_analysis[0]['energy'] > 0.5:
         mood = ['positive', 'high energy']
-    dur = track_analysis[0]['duration_ms'
-    return mood,dur
+    dur = track_analysis[0]['duration_ms']
+    return mood,dur,uri
 
 if __name__ == '__main__':
     main()

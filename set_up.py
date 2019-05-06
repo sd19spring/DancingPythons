@@ -1,9 +1,17 @@
 """
-Generating Computational Art
-Course: Software Design
-@author: Anthony Krichevskiy
+set_up.py generates computational art for each of the four moods. It builds off
+of the Computational Art Mini Project done in Software Design at Olin College.
+The number of images created has been hard coded to 20 images, but that can be
+altered. The more images you have the better your moving background will look.
+However, set_up.py already takes about 15 minutes to run when generating 20 images.
+
+If you are not satisfied with one of the folders of art, you can adjust the ranges of
+color in the fuction range_finder and specify which folder you want to change by
+getting rid of the outer for loop in the main function so that all folders are not
+changed.
 """
 
+#import these libraries 
 import random
 import math
 from PIL import Image
@@ -90,22 +98,6 @@ def evaluate_random_function(f, x, y, t):
 
     Returns:
         The function value
-
-    Examples:
-        >>> evaluate_random_function(["x"],-0.5, 0.75, 0.66)
-        -0.5
-        >>> evaluate_random_function(["y"],0.1,0.02, 0.45)
-        0.02
-        >>> evaluate_random_function(["sin_pi", ["cos_pi", ["t"]]], 0.5, 0, -0.5)
-        0
-        >>> evaluate_random_function(["prod", ["prod", ["y"], ["sin_pi", ["x"]]], ["sin_pi", ["t"]]], 0.5, -0.5, -0.5)
-        0.5
-        >>> evaluate_random_function(["avg", ["prod", ["x"], ["y"]], ["sin_pi", ["x"]]], 0.5, 0.82)
-        0.705
-        >>> evaluate_random_function(["square", ["avg", ["sin_pi", ["y"]], ["cos_pi", ["x"]]]], 0, (1/6))
-        0.5625
-        >>> evaluate_random_function(["root_abs", ["t"]], 0.2, 1, -0.09)
-        0.3
     """
     #The first term of the function list determines which function is called, therefore, conditionals are used.
     if f[0] == "prod":
@@ -161,14 +153,6 @@ def remap_interval(val,
 
     Returns:
         The value remapped from the input to the output interval
-
-    Examples:
-        >>> remap_interval(0.5, 0, 1, 0, 10)
-        5.0
-        >>> remap_interval(5, 4, 6, 0, 2)
-        1.0
-        >>> remap_interval(5, 4, 6, 1, 2)
-        1.5
     """
     # TODO: implement this
     valfraction = (val - input_interval_start) / (input_interval_end - input_interval_start)
@@ -185,16 +169,6 @@ def color_map(val, min_rgb=0, max_rgb=255):
 
     Returns:
         An integer in the interval [0,255]
-
-    Examples:
-        >>> color_map(-1.0)
-        0
-        >>> color_map(1.0)
-        255
-        >>> color_map(0.0)
-        127
-        >>> color_map(0.5)
-        191
     """
     # NOTE: This relies on remap_interval, which you must provide
     color_code = remap_interval(val, -1, 1, min_rgb, max_rgb)
@@ -208,8 +182,8 @@ def range_finder(mood=['negative', 'low energy']):
     if mood == ['negative', 'low energy']:
         ranges['red_min'] = 0
         ranges['red_max'] = 100
-        ranges['blue_min'] = 100
-        ranges['blue_max'] = 250
+        ranges['blue_min'] = 50
+        ranges['blue_max'] = 150
         ranges['green_min'] = 100
         ranges['green_max'] = 175
     if mood == ['positive', 'low energy']:
@@ -220,18 +194,18 @@ def range_finder(mood=['negative', 'low energy']):
         ranges['green_min'] = 50
         ranges['green_max'] = 150
     if mood == ['negative', 'high energy']:
-        ranges['red_min'] = 0
-        ranges['red_max'] = 255
-        ranges['blue_min'] = 0
-        ranges['blue_max'] = 255
-        ranges['green_min'] = 0
-        ranges['green_max'] = 255
+        ranges['red_min'] = 90
+        ranges['red_max'] = 150
+        ranges['blue_min'] = 100
+        ranges['blue_max'] = 200
+        ranges['green_min'] = 50
+        ranges['green_max'] = 70
     if mood == ['positive', 'high energy']:
-        ranges['red_min'] = 0
+        ranges['red_min'] = 150
         ranges['red_max'] = 255
-        ranges['blue_min'] = 0
+        ranges['blue_min'] = 100
         ranges['blue_max'] = 255
-        ranges['green_min'] = 0
+        ranges['green_min'] = 60
         ranges['green_max'] = 255
 
     return ranges
@@ -242,7 +216,7 @@ def new_functions():
 
         return red_function,green_function,blue_function
 
-def generate_art(ranges, t, red_function, green_function, blue_function, x_size=320, y_size=240):
+def generate_art(ranges, t, red_function, green_function, blue_function, x_size=427, y_size=240):
     """Generate computational art and save as an image file.
 
     Args:
@@ -270,15 +244,20 @@ def generate_art(ranges, t, red_function, green_function, blue_function, x_size=
             )
     return im
 
-def main(mood):
-    red_function, green_function, blue_function = new_functions()
-    for i in range(20):
-        time = remap_interval(i,0,20,-1,1)
-        location = 'images/'+ mood[0]+'_'+mood[1] +'/' +str(i) + '.png'
-        ranges = range_finder(mood)
-        im = generate_art(ranges,time,red_function, green_function, blue_function)
-        im.save(location)
+def main():
+    moods = [['positive', 'low energy'],
+            ['negative', 'low energy'],
+            ['positive', 'high energy'],
+            ['negative', 'high energy']]
+    for mood in moods:
+        red_function, green_function, blue_function = new_functions()
+        for i in range(20):
+            time = remap_interval(i,0,20,-1,1)
+            location = 'images/'+ mood[0]+'_'+mood[1] +'/' +str(i) + '.png'
+            ranges = range_finder(mood)
+            im = generate_art(ranges,time,red_function, green_function, blue_function)
+            im.save(location)
 
 
 if __name__ == '__main__':
-    main(['positive', 'low energy'])
+    main()
