@@ -14,10 +14,8 @@ import os
 
 def main():
     print('Welcome to Dancing Pythons! \nIf this is your first time, be sure that you ran set_up.py before running main.py. \nOtherwise, make sure your Spotify App is running on your device and have fun!')
-    result = music_to_mood.main()
-    mood = result[0]
-    duration = result[1]
-    uri = result[2]
+    mood,duration,uri = music_to_mood.main()
+    print(duration)
     edge_detection.main(mood,duration,uri)
 
 if __name__ == '__main__':

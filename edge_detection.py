@@ -12,7 +12,7 @@ import numpy as np
 import cv2
 from PIL import Image, ImageFont, ImageDraw
 import spotipy
-import time
+import timeit
 import music_to_mood
 
 def get_edges(frame):
@@ -34,7 +34,6 @@ def reset_index():
     return 0
 
 def play_song(uri):
-    time.sleep(.3)
     music_to_mood.sp.start_playback(uris = [uri])
 
 def main(mood, duration,uri,size = [1922,1080]):
@@ -45,17 +44,16 @@ def main(mood, duration,uri,size = [1922,1080]):
     play_song(uri)
 
     index = 0
-    for tic in range(duration):
+    t = timeit.Timer()
+    while t.timeit()<=duration:
         ret, frame = cap.read()
         edges = get_edges(frame)
         edges = cv2.resize(edges, (size[0], size[1]), interpolation = cv2.INTER_AREA)
 
-
-        index += 1
         art = get_new_art(mood, index,size)
         if index == 19:
             index = reset_index()
-
+        index += 1
 
         display = compile(art,edges)
 
