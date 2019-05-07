@@ -54,8 +54,9 @@ def get_song():
 
     for track in top_three:
         verification = check(track)
-        if verification == 'Y' or 'y':
+        if verification == 'Y' or verification == 'y':
             return track
+
     print('Your search did not yield the song you were looking for in the top 3 results. Please run main.py again. Check your spelling!')
     sys.exit()
 

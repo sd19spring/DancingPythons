@@ -64,8 +64,10 @@ def main(mood, duration,uri,size = [1922,1080]):
     play_song(uri)
 
     index = 0
-    t = time.time()
-    while time.time() - t <=duration:
+    start = time.time()
+    elapsed = 0
+    while  elapsed<=duration:
+        elapsed = time.time() - start
         ret, frame = cap.read()
         edges = get_edges(frame)
         edges = cv2.resize(edges, (size[0], size[1]), interpolation = cv2.INTER_AREA)
@@ -78,7 +80,6 @@ def main(mood, duration,uri,size = [1922,1080]):
         display = compile(art,edges)
 
         cv2.imshow('Dancing Pythons',display)
-
         k = cv2.waitKey(5) & 0xFF
         if k == 27:
             break
