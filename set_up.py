@@ -11,7 +11,7 @@ getting rid of the outer for loop in the main function so that all folders are n
 changed.
 """
 
-#import these libraries 
+#import these libraries
 import random
 import math
 from PIL import Image
@@ -210,11 +210,14 @@ def range_finder(mood=['negative', 'low energy']):
 
     return ranges
 def new_functions():
-        red_function = build_random_function(7, 9)
-        green_function = build_random_function(7, 9)
-        blue_function = build_random_function(7, 9)
+    '''
+    Returns the new functions for red,green, and blue using build random
+    '''
+    red_function = build_random_function(7, 9)
+    green_function = build_random_function(7, 9)
+    blue_function = build_random_function(7, 9)
 
-        return red_function,green_function,blue_function
+    return red_function,green_function,blue_function
 
 def generate_art(ranges, t, red_function, green_function, blue_function, x_size=427, y_size=240):
     """Generate computational art and save as an image file.
@@ -245,6 +248,10 @@ def generate_art(ranges, t, red_function, green_function, blue_function, x_size=
     return im
 
 def main():
+    '''
+    Creates folders for every mood category and calls helper functions to generate 20
+    images for each folder
+    '''
     moods = [['positive', 'low energy'],
             ['negative', 'low energy'],
             ['positive', 'high energy'],

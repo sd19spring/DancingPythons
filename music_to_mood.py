@@ -10,6 +10,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy
 import spotipy.util as util
 import sys
+from config import *
 
 def setup_credentials():
     '''
@@ -17,10 +18,10 @@ def setup_credentials():
     '''
     if 'sp' not in globals():
         scopes = 'user-modify-playback-state'
-        token = util.prompt_for_user_token('dpatel3836',
+        token = util.prompt_for_user_token(my_username,
                                             scopes,
-                                            client_id = '2c49178b39bc423dbb44f1ce220c12bb',
-                                            client_secret = '25cbe09bd4a8494cb525f7b53c1b726c',
+                                            client_id = my_client_id,
+                                            client_secret = my_client_secret,
                                             redirect_uri = 'http://example.com/callback/')
         sp = spotipy.Spotify(auth=token)
     return sp
@@ -68,6 +69,9 @@ def check(track):
     return verification
 
 def analyze(track):
+    '''
+    analyzes the correct track and returns the uri,duration,valance, and energy
+    '''
     uri = track['uri']
     duration = track['duration_ms']
 
@@ -77,6 +81,10 @@ def analyze(track):
     return uri,valence,energy,duration
 
 def main():
+    '''
+    Finds the correct song, then its attributes, then returns the mood and duration
+    with the help of helper functions
+    '''
     correct_song = get_song()
     uri,valence,energy,duration = analyze(correct_song)
     mood = get_mood(valence,energy)
